@@ -73,6 +73,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 extension ViewController: StoreFactsLoaderDelegate {
     func didUpdateFacts() {
         DispatchQueue.main.async { [unowned self] in
+            self.title = self.viewModel.title
             self.tableView.reloadData()
         }
     }
