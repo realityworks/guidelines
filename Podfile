@@ -6,5 +6,5 @@ target 'guidelines' do
   use_frameworks!
 
   # Pods for guidelines
-
+  pod 'TinyConstraints'
 end
