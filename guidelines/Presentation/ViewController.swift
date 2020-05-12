@@ -10,12 +10,12 @@ import UIKit
 import TinyConstraints
 
 class ViewController: UIViewController {
-    // Model
+    // MARK: Model
     let viewModel: ViewModel = ViewModel()
 
-    // View
-    
+    // MARK: View
     let tableView = UITableView()
+    let refreshControl = UIRefreshControl()
     
     init() {
         super.init(nibName: nil, bundle: nil)
@@ -51,7 +51,16 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
         
+        refreshControl.attributedTitle = NSAttributedString(string: "Pull to reload")
+        refreshControl.addTarget(self, action: #selector(reload), for: UIControl.Event.valueChanged)
+        tableView.addSubview(refreshControl)
+        
         viewModel.listenForUpdates(delegate: self)
+    }
+    
+    @objc
+    private func reload(sender: AnyObject) {
+        viewModel.loadData()
     }
 }
 
@@ -73,6 +82,7 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 extension ViewController: StoreFactsLoaderDelegate {
     func didUpdateFacts() {
         DispatchQueue.main.async { [unowned self] in
+            self.refreshControl.endRefreshing()
             self.title = self.viewModel.title
             self.tableView.reloadData()
         }
