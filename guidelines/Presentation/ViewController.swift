@@ -61,6 +61,7 @@ class ViewController: UIViewController {
     @objc
     private func reload(sender: AnyObject) {
         viewModel.loadData()
+        self.refreshControl.endRefreshing()
     }
 }
 
@@ -82,7 +83,6 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
 extension ViewController: StoreFactsLoaderDelegate {
     func didUpdateFacts() {
         DispatchQueue.main.async { [unowned self] in
-            self.refreshControl.endRefreshing()
             self.title = self.viewModel.title
             self.tableView.reloadData()
         }
