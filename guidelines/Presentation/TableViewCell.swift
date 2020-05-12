@@ -33,7 +33,7 @@ class TableViewCell: UITableViewCell {
         containedImageView.centerXToSuperview()
         containedImageView.width(60)
         containedImageView.aspectRatio(1)
-        containedImageView.contentMode = .scaleAspectFit
+        containedImageView.contentMode = .scaleAspectFill
         
         contentView.addSubview(titleLabel)
         
@@ -60,10 +60,14 @@ class TableViewCell: UITableViewCell {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    override func prepareForReuse() {
+        containedImageView.contentMode = .scaleAspectFill
+    }
 
     func configure(with fact: Facts.Fact) {
-        titleLabel.text = fact.title ?? "--"
-        descriptionLabel.text = fact.description ?? "--"
-        imageView?.update(with: URL(string: fact.imageHRef ?? ""))
+        titleLabel.text = fact.title
+        descriptionLabel.text = fact.description
+        containedImageView.update(with: URL(string: fact.imageHref ?? ""))
     }
 }

@@ -10,16 +10,8 @@ import UIKit
 
 
 extension UIImageView {
-    private func alphaFadeIn() {
-        alpha = 0
-        UIView.animate(withDuration: 0.4) { [weak self] in
-            self?.alpha = 1
-        }
-    }
-    
     func update(with url: URL?) {
         guard let url = url else {
-            image = nil
             return
         }
         
@@ -32,13 +24,13 @@ extension UIImageView {
                 error == nil,
                 let data = data,
                 let image = UIImage(data: data) else {
-                    self?.image = nil
-                    print ("Error: \(error?.localizedDescription ?? "UnknownError")")
+                    print ("Error: \(error?.localizedDescription ?? "Unknown Error : \(url)")")
                     return
             }
             
             DispatchQueue.main.async {
                 self?.image = image
+                self?.contentMode = .scaleAspectFit
             }
         }.resume()
     }

@@ -18,6 +18,6 @@ struct Facts: Decodable {
 
         let title: String?
         let description: String?
-        let imageHRef: String?
+        let imageHref: String?
     }
 }
