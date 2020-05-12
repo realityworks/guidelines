@@ -12,14 +12,24 @@ import Foundation
 // Using an MVVM style architecture along with SOLID principles
 
 class ViewModel {
+    
     private let store: Store
     private let useCases: UseCases
     
     init(_ dependencies: Dependencies = .real) {
         self.store = dependencies.store
         self.useCases = dependencies.useCases
-        
-        // Todo: Setup to add notifier on data updates
+    }
+}
+
+// MARK: Computed properties
+extension ViewModel {
+    var numberOfFacts: Int {
+        store.factsData?.rows.count ?? 0
+    }
+    
+    var title: String {
+        store.factsData?.title ?? "Loading"
     }
 }
 
@@ -27,6 +37,8 @@ class ViewModel {
 // Let's use a nice clean dependencies structure that wraps all of our needs into one argument. Instead of passing a collection of arguments to the view model.
 
 // In a larger project, you would have more transports and use cases. Each one with a single responsibility.
+
+// MARK: Dependencies
 extension ViewModel {
     struct Dependencies {
         let store: Store
