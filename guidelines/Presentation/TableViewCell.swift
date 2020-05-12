@@ -63,6 +63,9 @@ class TableViewCell: UITableViewCell {
     
     override func prepareForReuse() {
         containedImageView.contentMode = .scaleAspectFill
+        containedImageView.image = nil
+        descriptionLabel.text = ""
+        titleLabel.text = ""
     }
 
     func configure(with fact: Facts.Fact) {
