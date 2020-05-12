@@ -63,9 +63,9 @@ class TableViewCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func configure(with title: String, description: String, imageUrl: URL?) {
-        titleLabel.text = title
-        descriptionLabel.text = description
-        imageView?.update(with: imageUrl)
+    func configure(with fact: Facts.Fact) {
+        titleLabel.text = fact.title ?? "--"
+        descriptionLabel.text = fact.description ?? "--"
+        imageView?.update(with: URL(string: fact.imageHRef ?? ""))
     }
 }

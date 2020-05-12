@@ -9,26 +9,42 @@
 import Foundation
 
 // Implement the loader service via the rest calls
+struct Potter:Decodable {
+    let title: String
+    let author: String
+    let imageURL: String
+}
+
 class RESTLoaderService: LoaderService {
     func loadFacts(onCompleted: @escaping (Facts?)->Void) {
-        guard let url = URL(string: "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json") else { return }
+        let urlString = "https://dl.dropboxusercontent.com/s/2iodh4vg0eortkl/facts.json"
+        //let urlString = "https://de-coding-test.s3.amazonaws.com/books.json"
+        guard let url = URL(string: urlString) else { return }
         
         // Just use a URL Request here, we may need to update headers, or type
-        let urlRequest = URLRequest(url: url)
-        URLSession.shared.dataTask(with: urlRequest) { data, response, error in
+        URLSession.shared.dataTask(with: url) { data, response, urlError in
+            // Check the URL was read correctly
             guard
                 let httpURLResponse = response as? HTTPURLResponse,
                 httpURLResponse.statusCode == 200,
-                error == nil,
-                let data = data,
-                let facts = try? JSONSerialization.jsonObject(with: data) as? Facts else {
-                    print ("Error: \(error?.localizedDescription ?? "UnknownError")")
+                urlError == nil,
+                let data = data else {
+                    print ("Error: \(urlError?.localizedDescription ?? "UnknownHTTPError")")
                     onCompleted(nil)
                     return
             }
             
-            onCompleted(facts)
-        }
+            do {
+                let decoder = JSONDecoder()
+                let text = String(data: data, encoding: .windowsCP1252)
+                if let dataFromString = text?.data(using: .utf8, allowLossyConversion: false) {
+                    let facts = try decoder.decode(Facts.self, from: dataFromString)
+                    onCompleted(facts)
+                }
+            } catch {
+                print ("Failed Decoding \(error)")
+            }
+        }.resume()
     }
 }
 

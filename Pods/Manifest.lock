@@ -1,16 +1,20 @@
 PODS:
+  - SwiftyJSON (5.0.0)
   - TinyConstraints (4.0.1)
 
 DEPENDENCIES:
+  - SwiftyJSON
   - TinyConstraints
 
 SPEC REPOS:
   trunk:
+    - SwiftyJSON
     - TinyConstraints
 
 SPEC CHECKSUMS:
+  SwiftyJSON: 36413e04c44ee145039d332b4f4e2d3e8d6c4db7
   TinyConstraints: 8dd91295e56797648c7bc335dd20e1d91ec4c192
 
-PODFILE CHECKSUM: 4614c6f879246d60789ee22dbd577f28cf9fef79
+PODFILE CHECKSUM: f1775d0add11b6665be361dec470dd8890d9ab41
 
 COCOAPODS: 1.9.1

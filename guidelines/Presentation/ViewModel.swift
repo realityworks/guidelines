@@ -32,6 +32,11 @@ class ViewModel {
     func stopListeningForUpdates(delegate: StoreFactsLoaderDelegate) {
         store.loaderDelegates.removeAll { $0.delegateName == delegate.delegateName }
     }
+    
+    func getFact(at index: Int) -> Facts.Fact? {
+        guard index < store.factsData?.rows.count ?? 0 else { return nil }
+        return store.factsData?.rows[index]
+    }
 }
 
 // MARK: Computed properties

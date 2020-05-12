@@ -16,9 +16,8 @@ struct Facts: Decodable {
     
     struct Fact: Decodable {
 
-        let title: String
-        let description: String
-        let imageHRef: URL?
-
+        let title: String?
+        let description: String?
+        let imageHRef: String?
     }
 }

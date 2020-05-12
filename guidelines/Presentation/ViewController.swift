@@ -57,13 +57,15 @@ class ViewController: UIViewController {
 
 extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 10//viewModel.numberOfFacts
+        return viewModel.numberOfFacts
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: TableViewCell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell else { return UITableViewCell() }
+        if let fact = viewModel.getFact(at: indexPath.row) {
+            cell.configure(with: fact)
+        }
         
-        print ("cellForRowAt: \(indexPath)")
         return cell
     }
 }
