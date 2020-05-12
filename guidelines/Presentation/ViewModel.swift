@@ -21,6 +21,10 @@ class ViewModel {
         self.useCases = dependencies.useCases
     }
     
+    func loadData() {
+        useCases.loadData()
+    }
+    
     func listenForUpdates(delegate: StoreFactsLoaderDelegate) {
         store.loaderDelegates.append(delegate)
     }
