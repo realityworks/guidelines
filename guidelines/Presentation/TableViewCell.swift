@@ -38,7 +38,6 @@ class TableViewCell: UITableViewCell {
         contentView.addSubview(titleLabel)
         
         titleLabel.font = .boldSystemFont(ofSize: 20)
-        titleLabel.text = "TEST"
         
         titleLabel.height(20)
         titleLabel.leftToRight(of: imageContainer, offset: 8)
@@ -48,7 +47,6 @@ class TableViewCell: UITableViewCell {
         contentView.addSubview(descriptionLabel)
         
         descriptionLabel.font = .systemFont(ofSize: 16)
-        descriptionLabel.text = "DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST 999"
         descriptionLabel.numberOfLines = 0
         descriptionLabel.lineBreakMode = .byWordWrapping
         
