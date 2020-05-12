@@ -14,38 +14,49 @@ class TableViewCell: UITableViewCell {
 
     private let titleLabel = UILabel()
     private let descriptionLabel = UILabel()
-    private let imageContainer = UIImageView()
+    private let containedImageView = UIImageView()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         // Setup the UI Components
+        let imageContainer = UIView()
+        contentView.addSubview(imageContainer)
         
-        let vStack = UIStackView()
-        vStack.alignment = .fill
-        vStack.distribution = .fillProportionally
-        vStack.addArrangedSubview(titleLabel)
-        titleLabel.edgesToSuperview(excluding: [.top, .bottom])
+        imageContainer.leftToSuperview()
+        imageContainer.topToSuperview()
+        imageContainer.width(90)
+        imageContainer.aspectRatio(1)
+        
+        imageContainer.addSubview(containedImageView)
+        containedImageView.centerYToSuperview()
+        containedImageView.centerXToSuperview()
+        containedImageView.width(60)
+        containedImageView.aspectRatio(1)
+        containedImageView.contentMode = .scaleAspectFit
+        
+        contentView.addSubview(titleLabel)
+        
+        titleLabel.font = .boldSystemFont(ofSize: 20)
         titleLabel.text = "TEST"
         
-        vStack.addArrangedSubview(descriptionLabel)
-        descriptionLabel.edgesToSuperview(excluding: [.top, .bottom])
-        descriptionLabel.text = "DESCRIPTION TEST"
+        titleLabel.height(20)
+        titleLabel.leftToRight(of: imageContainer, offset: 8)
+        titleLabel.rightToSuperview()
+        titleLabel.topToSuperview(offset: 8)
+            
+        contentView.addSubview(descriptionLabel)
         
-        let hStack = UIStackView()
-        hStack.alignment = .fill
-        hStack.axis = .horizontal
+        descriptionLabel.font = .systemFont(ofSize: 16)
+        descriptionLabel.text = "DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST DESCRIPTION TEST 999"
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.lineBreakMode = .byWordWrapping
         
-        hStack.addArrangedSubview(imageContainer)
-        imageContainer.leftToSuperview()
-        imageContainer.width(100)
-        imageContainer.aspectRatio(1)
-        imageContainer.contentMode = .scaleAspectFit
-        
-        contentView.addSubview(hStack)
-        
-        // So much easier just to use a wrapper library
-        hStack.edgesToSuperview()
+        descriptionLabel.leftToRight(of: imageContainer, offset: 8)
+        descriptionLabel.topToBottom(of: titleLabel, offset: 8)
+        descriptionLabel.rightToSuperview()
+        descriptionLabel.bottomToSuperview()
+
     }
     
     required init?(coder: NSCoder) {
@@ -53,6 +64,8 @@ class TableViewCell: UITableViewCell {
     }
 
     func configure(with title: String, description: String, imageUrl: URL?) {
-        // Todo
+        titleLabel.text = title
+        descriptionLabel.text = description
+        imageView?.update(with: imageUrl)
     }
 }

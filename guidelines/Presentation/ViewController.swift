@@ -38,7 +38,7 @@ class ViewController: UIViewController {
         self.view.addSubview(tableView)
         tableView.edgesToSuperview()
         tableView.allowsSelection = false
-        tableView.estimatedRowHeight = UITableView.automaticDimension
+        tableView.estimatedRowHeight = 140
         tableView.rowHeight = UITableView.automaticDimension
         tableView.separatorStyle = .none
 
