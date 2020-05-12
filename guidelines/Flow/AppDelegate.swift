@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         let nvc = UINavigationController()
         nvc.pushViewController(vc, animated: false)
         self.window?.rootViewController = nvc
+        self.window?.makeKeyAndVisible()
         return true
     }
 }
