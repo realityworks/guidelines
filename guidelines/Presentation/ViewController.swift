@@ -49,6 +49,8 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(TableViewCell.self, forCellReuseIdentifier: TableViewCell.identifier)
+        
+        viewModel.listenForUpdates(delegate: self)
     }
 }
 
@@ -60,6 +62,15 @@ extension ViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell: TableViewCell = tableView.dequeueReusableCell(withIdentifier: TableViewCell.identifier) as? TableViewCell else { return UITableViewCell() }
         
+        print ("cellForRowAt: \(indexPath)")
         return cell
     }
+}
+
+extension ViewController: StoreFactsLoaderDelegate {
+    func didUpdateFacts() {
+        tableView.reloadData()
+    }
+    
+    var delegateName: String { "\(self)"}
 }

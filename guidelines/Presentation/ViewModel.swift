@@ -20,6 +20,14 @@ class ViewModel {
         self.store = dependencies.store
         self.useCases = dependencies.useCases
     }
+    
+    func listenForUpdates(delegate: StoreFactsLoaderDelegate) {
+        store.loaderDelegates.append(delegate)
+    }
+    
+    func stopListeningForUpdates(delegate: StoreFactsLoaderDelegate) {
+        store.loaderDelegates.removeAll { $0.delegateName == delegate.delegateName }
+    }
 }
 
 // MARK: Computed properties

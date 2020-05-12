@@ -9,10 +9,15 @@
 import Foundation
 
 class UseCases {
-    let loaderService: LoaderService
+    private let loaderService: LoaderService
+    var onFactsLoaded: ((Facts?)->())? = nil
     
     init(_ dependencies: Dependencies = .real) {
         self.loaderService = dependencies.loaderService
+    }
+    
+    func loadData() {
+        loaderService.loadFacts(onCompleted: onFactsLoaded ?? { _ in })
     }
 }
 

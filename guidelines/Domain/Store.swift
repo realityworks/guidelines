@@ -10,7 +10,8 @@ import Foundation
 
 // We want to keep these in the store, because it's responsible for the list of facts
 protocol StoreFactsLoaderDelegate {
-    func didLoadFacts()
+    func didUpdateFacts()
+    var delegateName: String { get }
 }
 
 class Store {
@@ -18,13 +19,20 @@ class Store {
     let useCases: UseCases
     
     // This would be in a seperate State class where it can be managed for storage, but for brevity we'll just keep it here.
-    let factsData: Facts? = nil
+    private (set) var factsData: Facts? = nil
     
     // Normally we could use something like RX to manage multiple subscriptions, here we just use an array of delegates as an example
-    private var loaderDelegate: [StoreFactsLoaderDelegate] = []
+    var loaderDelegates: [StoreFactsLoaderDelegate] = []
     
     init(useCases: UseCases) {
         self.useCases = useCases
+        
+        useCases.onFactsLoaded = onFactsLoaded(facts:)
+    }
+    
+    private func onFactsLoaded(facts: Facts?) {
+        factsData = facts
+        loaderDelegates.forEach { $0.didUpdateFacts() }
     }
 }
 
@@ -33,6 +41,7 @@ extension Store {
     // Also use lazy initialization
     static let instance: Store = {
         let store = Store(useCases: UseCases())
+    
         return store
     }()
 }
